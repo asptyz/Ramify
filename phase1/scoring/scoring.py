@@ -1,6 +1,6 @@
 # ============================================================================
-# ⚠️  ATTENTION: Ce fichier n’a pas de lien avec le développement de votre bot.
-# ⚠️  Vous pouvez l’ignorer.
+# ⚠️  ATTENTION: This file is not related to the development of your bot.
+# ⚠️  You can ignore it.
 # ============================================================================
 
 import math
@@ -299,13 +299,13 @@ def get_local_score(
 
 
 # ============================================================================
-# affichage
+# display
 # ============================================================================
 
 def show_result(local_score: dict, is_show_graph: bool = False):
-    # Affichage formaté de tous les scores
+    # Formatted display of all scores
     print("\n" + "=" * 70)
-    print("📊 RÉSULTATS")
+    print("📊 RESULTS")
     print("=" * 70)
 
     print("\n🎯 SCORES:")
@@ -320,25 +320,24 @@ def show_result(local_score: dict, is_show_graph: bool = False):
     print("\n" + "=" * 70)
 
     print("🎯 Performance:")
-    print(f"  Brut PnL:        { local_score["stats"]["cumulative_return"]*100:.2f}%")
-
+    print(f"  Raw PnL:        { local_score['stats']['cumulative_return']*100:.2f}%")
 
     if is_show_graph:
-        print("\033[94mune page graphique va s'ouvrir pour vous montrer les résultats du pnl\033[0m")
-        # Graphique du PnL avec matplotlib
+        print("\033[94mA graphical window will open to show the PnL results\033[0m")
+        # PnL graph with matplotlib
         pnl_dict = local_score["pnl"]
         pnl_series = pd.Series(pnl_dict).sort_index()
 
         plt.figure(figsize=(12, 6))
         plt.plot(pnl_series.index, pnl_series.values, linewidth=2, color='#2E86AB')
-        plt.axhline(y=1.0, color='gray', linestyle='--', linewidth=1, alpha=0.5, label='Capital initial')
+        plt.axhline(y=1.0, color='gray', linestyle='--', linewidth=1, alpha=0.5, label='Initial capital')
         plt.fill_between(pnl_series.index, pnl_series.values, 1.0, 
                         where=(pnl_series.values >= 1.0), alpha=0.3, color='green', label='Profit')
         plt.fill_between(pnl_series.index, pnl_series.values, 1.0, 
-                        where=(pnl_series.values < 1.0), alpha=0.3, color='red', label='Perte')
+                        where=(pnl_series.values < 1.0), alpha=0.3, color='red', label='Loss')
         plt.xlabel('Epoch', fontsize=12, fontweight='bold')
-        plt.ylabel('PnL (Multiplicateur)', fontsize=12, fontweight='bold')
-        plt.title('Évolution du PnL au fil du temps', fontsize=14, fontweight='bold', pad=20)
+        plt.ylabel('PnL (Multiplier)', fontsize=12, fontweight='bold')
+        plt.title('Evolution of PnL Over Time', fontsize=14, fontweight='bold', pad=20)
         plt.grid(True, alpha=0.3, linestyle='--')
         plt.legend(loc='best')
         plt.tight_layout()
